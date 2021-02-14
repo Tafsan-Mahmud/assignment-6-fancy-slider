@@ -6,9 +6,6 @@
   position: relative;
 }
 
-.margin{
-  margin-top: 4%;
-}
 .gallery-header {
   display: none;
 }
@@ -20,11 +17,20 @@
 .img-thumbnail {
   cursor: pointer;
 }
+.position{
+  display: none;
+  position: absolute;
+  width: 100px;
+}
+.hvr:hover .position{
+  display: block;
+}
 
 .added {
-  border: 2px solid #342968;
+  border: 2px solid #1e1743;
   border-radius: 5px;
 }
+
 
 img {
   height: 400px;
@@ -66,4 +72,10 @@ img {
     height: 300px;
     width: 90%;
   }
+}
+
+.centerItem {
+	position: relative;
+	margin: 0 auto;
+	margin-top: 70px;
 }

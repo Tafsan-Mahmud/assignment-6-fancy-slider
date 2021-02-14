@@ -1,3 +1,14 @@
+// *************************here i showed that input box clicked************************************//
+
+
+document.getElementById("search")
+
+.addEventListener("keypress", function(event) {
+    if (event.key== 'Enter')
+    document.getElementById("search-btn").click();
+});
+
+
 const imagesArea = document.querySelector('.images');
 const gallery = document.querySelector('.gallery');
 const galleryHeader = document.querySelector('.gallery-header');
@@ -25,28 +36,40 @@ const showImages = (images) => {
     div.innerHTML = ` <img class="img-fluid img-thumbnail" onclick=selectItem(event,"${image.webformatURL}") src="${image.webformatURL}" alt="${image.tags}">`;
     gallery.appendChild(div)
   })
-
+  toggleSpinner()
 }
 
 const getImages = (query) => {
-  fetch(`https://pixabay.com/api/?key=${KEY}=${query}&image_type=photo&pretty=true`)
+  const url=`https://pixabay.com/api/?key=${KEY}=${query}&image_type=photo&pretty=true`
+  toggleSpinner()
+  fetch(url)
+     
     .then(response => response.json())
     .then(data => showImages(data.hits))
-    .catch(err => console.log(err))
+
+/////here i added error message if API suddenly crack down or face any problem------------/////
+
+    .catch( error => errorMessageShow ('Something went wrong! Please try again letter'))
+    
 }
 
 let slideIndex = 0;
 const selectItem = (event, img) => {
   let element = event.target;
-  element.classList.add('added');
- 
+  element.classList.toggle('added');
+
   let item = sliders.indexOf(img);
   if (item === -1) {
     sliders.push(img);
-  } else {
-    alert('Hey, Already added !')
+  }
+  
+  else {
+    // alert('Hey, Already added !')
+    delete  sliders[item]
   }
 }
+
+
 var timer
 const createSlider = () => {
   // check slider image length
@@ -67,7 +90,28 @@ const createSlider = () => {
   document.querySelector('.main').style.display = 'block';
   // hide image aria
   imagesArea.style.display = 'none';
-  const duration = document.getElementById('duration').value || 1000;
+  const duration = document.getElementById('doration').value  || 1000
+
+if(
+
+  duration < 0
+){
+  
+const minusValue=document.getElementById("minusValue")
+      minusValue.innerHTML=`
+      <div class="alert alert-success w-75 centerItem" role="alert">
+      <h4 class="alert-heading">Sorry!</h4>
+      <p>Aww sorry, you unsuccessful to make a slider with minus(-) value. You can only added the plus (+) value for slider 
+      change duration.</p>
+      <hr>
+      <p class="mb-0">Whenever you need to, be sure to use plus value else its not working.</p>
+    </div>
+     `
+
+
+
+}else{
+
   sliders.forEach(slide => {
     let item = document.createElement('div')
     item.className = "slider-item";
@@ -81,7 +125,14 @@ const createSlider = () => {
     slideIndex++;
     changeSlide(slideIndex);
   }, duration);
+
+
+
 }
+
+  }
+
+
 
 // change slider index 
 const changeItem = index => {
@@ -120,3 +171,32 @@ searchBtn.addEventListener('click', function () {
 sliderBtn.addEventListener('click', function () {
   createSlider()
 })
+
+
+// for bonus point
+///<---------------------->spinner<------------------>>>//////
+
+const toggleSpinner=()=>{
+
+const spinner= document.getElementById("spinner")
+
+  spinner.classList.toggle('d-none')
+
+
+
+}
+
+///for bonus -point
+
+/////here i added error message if API suddenly crack down or face any problem------------/////
+///---------------Error message show----------------///
+
+const errorMessageShow=error=>{
+
+
+  const errorMessage=document.getElementById("errorMessage")
+  
+  errorMessage.innerText=error;
+  
+  }
+

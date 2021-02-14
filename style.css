@@ -6,6 +6,9 @@
   position: relative;
 }
 
+.margin{
+  margin-top: 4%;
+}
 .gallery-header {
   display: none;
 }
@@ -19,7 +22,7 @@
 }
 
 .added {
-  border: 2px solid #1e1743;
+  border: 2px solid #342968;
   border-radius: 5px;
 }
 
